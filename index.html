@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简历</title>
+    <style>
+/* ========== CSS变量定义 ========== */
+:root {
+    --primary-color: #455964;
+    --primary-light: #5a7078;
+    --secondary-color: #4a5568;
+    --accent-color: #455964;
+    --background-color: #CFD9DD;
+    --card-background: #ffffff;
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --text-light: #718096;
+    --border-color: #e2e8f0;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --font-family: 'SimSun', '宋体', serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+    --border-radius: 8px;
+    --border-radius-lg: 12px;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-family); font-size: var(--font-size-base); line-height: 1.6; color: var(--text-primary); background-color: var(--background-color); }
+ul { list-style: none; }
+a { text-decoration: none; color: inherit; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--spacing-md); }
+.section { padding: var(--spacing-xl) 0; }
+.section-title { font-size: var(--font-size-2xl); color: var(--primary-color); margin-bottom: var(--spacing-lg); text-align: center; position: relative; }
+.section-title::after { content: ''; display: block; width: 60px; height: 3px; background-color: var(--accent-color); margin: var(--spacing-sm) auto 0; }
+.navbar { position: fixed; top: 0; left: 0; right: 0; background-color: var(--card-background); box-shadow: var(--shadow-sm); z-index: 1000; }
+.nav-container { max-width: 1200px; margin: 0 auto; padding: var(--spacing-sm) var(--spacing-md); display: flex; justify-content: space-between; align-items: center; }
+.nav-brand { font-size: var(--font-size-xl); font-weight: 700; color: var(--primary-color); }
+.nav-links { display: flex; gap: var(--spacing-lg); }
+.nav-links a { color: var(--text-secondary); font-weight: 500; padding: var(--spacing-xs) var(--spacing-sm); border-radius: var(--border-radius); transition: var(--transition); }
+.nav-links a:hover { color: var(--accent-color); background-color: rgba(49, 130, 206, 0.1); }
+.hero { background: url('assets/images/背景图.jpg') center/cover no-repeat; color: white; padding: calc(var(--spacing-xl) * 3) 0 var(--spacing-xl); margin-top: 60px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.3); }
+.hero .container { position: relative; z-index: 1; }
+.hero-title { font-size: calc(var(--font-size-2xl) * 1.5); margin-bottom: var(--spacing-sm); letter-spacing: 0.3em; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); animation: fadeInDown 1s ease; }
+.hero-subtitle { font-size: var(--font-size-lg); opacity: 0.9; animation: fadeInUp 1s ease 0.3s both; }
+.personal-section { background-color: var(--card-background); }
+.personal-content { display: flex; gap: var(--spacing-xl); align-items: flex-start; }
+.photo-area { flex: 0 0 250px; }
+.photo-img { width: 250px; height: 300px; object-fit: cover; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+.photo-img:hover { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); }
+.info-area { flex: 1; }
+.info-item { margin-bottom: var(--spacing-lg); }
+.info-label { font-size: var(--font-size-lg); color: var(--primary-color); margin-bottom: var(--spacing-xs); }
+.info-value { color: var(--text-secondary); }
+.contact-list li { padding: var(--spacing-xs) 0; color: var(--text-secondary); transition: transform 0.3s ease, color 0.3s ease; }
+.contact-list li:hover { transform: translateX(10px); color: var(--primary-color); }
+.contact-icon { margin-right: var(--spacing-xs); }
+.intro-text { line-height: 1.8; }
+.awards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--spacing-lg); }
+.award-card { background-color: var(--card-background); border-radius: var(--border-radius-lg); padding: var(--spacing-lg); text-align: center; box-shadow: var(--shadow-md); transition: var(--transition); }
+.award-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+.award-icon { font-size: 3rem; margin-bottom: var(--spacing-sm); transition: transform 0.3s ease; }
+.award-card:hover .award-icon { animation: pulse 0.6s ease infinite; }
+.award-name { font-size: var(--font-size-lg); font-weight: 600; color: var(--primary-color); margin-bottom: var(--spacing-xs); }
+.internship-section { background-color: var(--card-background); }
+.internship-card { background-color: var(--card-background); }
+.internship-header { background: #9E9E9E; color: white; padding: var(--spacing-md) var(--spacing-lg); text-align: left; border-radius: var(--border-radius-lg); margin-bottom: var(--spacing-lg); }
+.internship-company { font-size: var(--font-size-xl); font-weight: 700; margin-top: -0.6rem; margin-bottom: var(--spacing-xs); }
+.internship-position { font-size: var(--font-size-lg); opacity: 0.9; margin-bottom: var(--spacing-xs); }
+.internship-duration { font-size: var(--font-size-sm); opacity: 0.8; }
+.internship-body { padding: 0; background-color: var(--card-background); }
+.work-section, .achievement-section { margin-bottom: var(--spacing-lg); }
+.work-title { font-size: var(--font-size-lg); color: var(--primary-color); margin-bottom: var(--spacing-sm); padding-bottom: var(--spacing-xs); border-bottom: 2px solid var(--accent-color); }
+.work-item { margin-bottom: var(--spacing-md); padding: var(--spacing-sm); border-radius: var(--border-radius); transition: background 0.3s ease; }
+.work-item:hover { background: rgba(69, 89, 100, 0.05); }
+.work-item h5 { font-size: var(--font-size-base); color: var(--text-primary); margin-bottom: var(--spacing-xs); }
+.work-item ul, .achievement-section ul { padding-left: var(--spacing-md); list-style: disc; }
+.work-item li, .achievement-section li { color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--spacing-xs); }
+.skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); }
+.skill-category { background-color: var(--card-background); padding: var(--spacing-lg); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); transition: var(--transition); position: relative; overflow: hidden; }
+.skill-category:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.skill-category::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--primary-color), transparent); transition: left 0.5s ease; }
+.skill-category:hover::before { left: 100%; }
+.category-title { font-size: var(--font-size-lg); color: var(--primary-color); margin-bottom: var(--spacing-sm); padding-bottom: var(--spacing-xs); border-bottom: 2px solid var(--accent-color); }
+.skill-description { color: var(--text-secondary); line-height: 1.8; }
+.footer { background-color: var(--primary-color); color: white; padding: var(--spacing-lg) 0; text-align: center; transition: background 0.3s ease; }
+.footer:hover { background-color: var(--primary-light); }
+.footer p { opacity: 0.8; font-size: var(--font-size-sm); }
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.navbar.scrolled { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: var(--shadow-md); }
+.nav-links a.active { color: var(--primary-color); background-color: rgba(69, 89, 100, 0.1); font-weight: 600; }
+.card-animate { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.card-visible { opacity: 1; transform: translateY(0); }
+.scroll-top-btn { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; background: var(--primary-color); color: white; border: none; font-size: 1.5rem; cursor: pointer; opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 999; box-shadow: var(--shadow-md); }
+.scroll-top-btn.show { opacity: 1; visibility: visible; }
+.scroll-top-btn:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+.custom-cursor { width: 20px; height: 20px; border: 2px solid var(--primary-color); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background 0.2s; }
+.cursor-hover { width: 40px; height: 40px; background: rgba(69, 89, 100, 0.1); }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@media (max-width: 768px) {
+    .nav-container { flex-direction: column; gap: var(--spacing-sm); }
+    .nav-links { gap: var(--spacing-sm); flex-wrap: wrap; justify-content: center; }
+    .hero { padding: calc(var(--spacing-xl) * 2) 0 var(--spacing-lg); margin-top: 100px; }
+    .hero-title { font-size: var(--font-size-2xl); }
+    .personal-content { flex-direction: column; align-items: center; }
+    .info-area { text-align: center; }
+    .skills-container, .awards-grid { grid-template-columns: 1fr; }
+    .section-title { font-size: var(--font-size-xl); }
+}
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">个人简历</div>
+            <ul class="nav-links">
+                <li><a href="#personal">个人信息</a></li>
+                <li><a href="#awards">获奖情况</a></li>
+                <li><a href="#internship">实习经历</a></li>
+                <li><a href="#skills">技术掌握</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero区域 -->
+    <header class="hero">
+        <div class="container">
+            <h1 class="hero-title">欢迎访问我的简历</h1>
+            <p class="hero-subtitle">专业 · 高效 · 创新</p>
+        </div>
+    </header>
+
+    <!-- 个人信息区域 -->
+    <section id="personal" class="section personal-section">
+        <div class="container">
+            <h2 class="section-title">个人信息</h2>
+            <div class="personal-content">
+                <!-- 左侧照片区域 -->
+                <div class="photo-area">
+                    <img src="assets/images/微信图片_20251218223443_489_3.jpg" alt="张宝琪" class="photo-img">
+                </div>
+                <!-- 右侧信息区域 -->
+                <div class="info-area">
+                    <div class="info-item name">
+                        <h3 class="info-label">姓名</h3>
+                        <p class="info-value">张宝琪</p>
+                    </div>
+                    <div class="info-item contact">
+                        <h3 class="info-label">联系方式</h3>
+                        <ul class="contact-list">
+                            <li><span class="contact-icon">📧</span> 2746697200@qq.com</li>
+                            <li><span class="contact-icon">📱</span> 18741705515</li>
+                            <li><span class="contact-icon">📍</span> 大连</li>
+                        </ul>
+                    </div>
+                    <div class="info-item intro">
+                        <h3 class="info-label">个人简介</h3>
+                        <p class="info-value intro-text">数据科学与大数据技术专业本科生，具备扎实的理论基础和丰富的实践经验。擅长从复杂数据中挖掘业务价值，熟练掌握Python、SQL、Spark等工具链，拥有机器学习建模、大数据处理及分析可视化的全流程项目经验。在国家级竞赛中多次获奖，并在头部互联网公司完成核心数据项目实习，具备优秀的解决问题能力和团队协作精神。对数据驱动决策充满热情，致力于通过技术创新解决实际业务挑战。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 获奖情况区域 -->
+    <section id="awards" class="section awards-section">
+        <div class="container">
+            <h2 class="section-title">获奖情况</h2>
+            <div class="awards-grid">
+                <div class="award-card">
+                    <div class="award-icon">🏆</div>
+                    <div class="award-name">2024年全国大学生数据挖掘竞赛国家一等奖</div>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon">🥇</div>
+                    <div class="award-name">2025年"挑战杯"全国大学生课外学术科技作品竞赛国家级二等奖</div>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon">🎖️</div>
+                    <div class="award-name">2023年美国大学生数学建模竞赛（MCM/ICM）Finalist（特等奖提名）</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 实习经历区域 -->
+    <section id="internship" class="section internship-section">
+        <div class="container">
+            <h2 class="section-title">实习经历</h2>
+            <div class="internship-card">
+                <div class="internship-header">
+                    <div class="internship-company">人工智能研究院</div>
+                    <div class="internship-position">机器学习算法实习生</div>
+                    <div class="internship-duration">2023年6月 - 2023年9月</div>
+                </div>
+                <div class="internship-body">
+                    <div class="work-section">
+                        <h4 class="work-title">核心工作</h4>
+                        <div class="work-item">
+                            <h5>1. 多模态大模型预训练数据构建</h5>
+                            <ul>
+                                <li>参与构建亿级图文对齐数据集，设计自动化清洗流水线（Python + CLIP模型），将噪声数据过滤效率提升40%。</li>
+                                <li>提出基于视觉语义相似度的负采样策略，使模型在COCO检索任务上Recall@5提升3.2%。</li>
+                            </ul>
+                        </div>
+                        <div class="work-item">
+                            <h5>2. 轻量化视觉模型部署优化</h5>
+                            <ul>
+                                <li>将研究院的通用检测模型（参数量500M）适配至边缘设备，通过TensorRT量化与层融合，推理速度提升5倍。</li>
+                                <li>编写模型部署文档与SDK，支持3个下游业务团队快速调用。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="achievement-section">
+                        <h4 class="work-title">成果</h4>
+                        <ul>
+                            <li>独立完成的技术报告《多模态数据清洗中的语义过滤方法》获团队"优秀实习生案例"奖。</li>
+                            <li>优化后的模型成功落地智慧农业项目，节省硬件成本约20%。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术掌握区域 -->
+    <section id="skills" class="section skills-section">
+        <div class="container">
+            <h2 class="section-title">技术掌握</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3 class="category-title">编程语言</h3>
+                    <p class="skill-description">精通Python（Pandas/Scikit-learn/PyTorch），熟练使用SQL/Hive进行复杂查询与优化，了解Scala/Java。</p>
+                </div>
+                <div class="skill-category">
+                    <h3 class="category-title">大数据与云计算</h3>
+                    <p class="skill-description">熟练使用Spark进行分布式数据处理与特征工程，有TB级数据实战经验。熟悉Hadoop生态，具备AWS/阿里云平台使用经验。</p>
+                </div>
+                <div class="skill-category">
+                    <h3 class="category-title">机器学习与算法</h3>
+                    <p class="skill-description">掌握机器学习全流程（特征工程、模型训练、调优部署），熟悉XGBoost、LightGBM及深度学习模型（CNN/RNN）。具备模型服务化（Docker + Flask）落地经验。</p>
+                </div>
+                <div class="skill-category">
+                    <h3 class="category-title">数据分析与可视化</h3>
+                    <p class="skill-description">擅长探索性数据分析与统计建模，能独立完成A/B实验设计与评估。熟练使用Matplotlib/Seaborn/Tableau进行数据可视化与故事呈现。</p>
+                </div>
+                <div class="skill-category">
+                    <h3 class="category-title">开发与工具</h3>
+                    <p class="skill-description">熟练使用Git、Linux、Docker，具备良好的编码习惯与工程化协作能力。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 个人简历. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+// 平滑滚动
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const navHeight = document.querySelector('.navbar').offsetHeight;
+            window.scrollTo({ top: target.offsetTop - navHeight - 20, behavior: 'smooth' });
+        }
+    });
+});
+
+// 滚动动画
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+
+const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => { if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('card-visible'), i * 150); });
+}, { threshold: 0.2 });
+
+// 导航栏效果
+const navbar = document.querySelector('.navbar');
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 100);
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - navbar.offsetHeight - 100) current = s.id; });
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+    scrollTopBtn.classList.toggle('show', window.scrollY > 300);
+});
+
+// 照片3D效果
+const photoImg = document.querySelector('.photo-img');
+if (photoImg) {
+    photoImg.addEventListener('mousemove', e => {
+        const rect = photoImg.getBoundingClientRect();
+        const rotateX = (e.clientY - rect.top - rect.height/2) / 10;
+        const rotateY = (rect.width/2 - (e.clientX - rect.left)) / 10;
+        photoImg.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    });
+    photoImg.addEventListener('mouseleave', () => { photoImg.style.transform = 'scale(1)'; });
+}
+
+// 打字机效果
+function typeWriter(el, text, speed = 100) {
+    let i = 0; el.textContent = '';
+    (function type() { if (i < text.length) { el.textContent += text.charAt(i++); setTimeout(type, speed); } })();
+}
+
+// 页面加载
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.section').forEach(s => { s.classList.add('fade-in'); observer.observe(s); });
+    document.querySelectorAll('.award-card, .skill-category').forEach(c => { c.classList.add('card-animate'); cardObserver.observe(c); });
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) { const text = heroTitle.textContent; setTimeout(() => typeWriter(heroTitle, text, 150), 500); }
+});
+
+// 回到顶部按钮
+const scrollTopBtn = document.createElement('button');
+scrollTopBtn.className = 'scroll-top-btn';
+scrollTopBtn.innerHTML = '↑';
+document.body.appendChild(scrollTopBtn);
+scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// 自定义鼠标
+const cursor = document.createElement('div');
+cursor.className = 'custom-cursor';
+document.body.appendChild(cursor);
+document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+document.querySelectorAll('a, button, .award-card, .skill-category').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
+});
+    </script>
+</body>
+</html>
